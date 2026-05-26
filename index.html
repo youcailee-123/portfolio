@@ -192,6 +192,7 @@ window.addEventListener("scroll",function(){var sy=window.scrollY+100;sections.f
   }
   
   // 鼠标滚轮事件（仅PC）
+  var snapBackBlocked = false;
   window.addEventListener('wheel', function(e) {
     if (window.innerWidth <= 768) return;
     var scrollY = window.pageYOffset;
@@ -199,13 +200,15 @@ window.addEventListener("scroll",function(){var sy=window.scrollY+100;sections.f
     var capTop = capabilities.getBoundingClientRect().top;
     
     // 仅在首屏（scrollY < hero高度一半）向下滚 → 跳到核心能力
-    if (e.deltaY > 0 && scrollY < heroHeight * 0.5) {
+    if (e.deltaY > 0 && scrollY < heroHeight * 0.5 && !isScrolling) {
       e.preventDefault();
       scrollToCapabilities();
+      snapBackBlocked = true;
+      setTimeout(function(){ snapBackBlocked = false; }, 1000);
       return;
     }
-    // 在 capabilities 顶部附近（capTop 在 0~250px）向上滚 → 回到 hero
-    if (e.deltaY < 0 && capTop > 0 && capTop < 250) {
+    // 在 capabilities 顶部向上滚 → 回到 hero（需明确向上滚动且未被屏蔽）
+    if (e.deltaY < -10 && capTop > 0 && capTop < 250 && scrollY > 100 && !snapBackBlocked && !isScrolling) {
       e.preventDefault();
       scrollToHero();
       return;
