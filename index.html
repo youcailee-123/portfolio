@@ -173,9 +173,6 @@ window.addEventListener("scroll",function(){var sy=window.scrollY+100;sections.f
   if (!hero || !capabilities) return;
   
   var isScrolling = false;
-  var touchStartY = 0;
-  var touchDelta = 0;
-  
   function scrollToCapabilities() {
     if (isScrolling) return;
     isScrolling = true;
@@ -215,28 +212,7 @@ window.addEventListener("scroll",function(){var sy=window.scrollY+100;sections.f
     }
   }, { passive: false });
   
-  // 触摸事件（移动端已禁用吸附）
-  window.addEventListener('touchstart', function(e) {
-    if (window.innerWidth <= 768) return;
-    touchStartY = e.touches[0].clientY;
-    touchDelta = 0;
-  }, { passive: true });
-  
-  window.addEventListener('touchmove', function(e) {
-    touchDelta = e.touches[0].clientY - touchStartY;
-    var scrollY = window.pageYOffset;
-    var heroHeight = hero.offsetHeight;
-    var capTop = capabilities.getBoundingClientRect().top;
-    
-    if (touchDelta < -30 && scrollY < heroHeight * 0.5 && !isScrolling) {
-      e.preventDefault();
-      scrollToCapabilities();
-    }
-    if (touchDelta > 30 && capTop > 0 && capTop < 250 && !isScrolling) {
-      e.preventDefault();
-      scrollToHero();
-    }
-  }, { passive: false });
+
 })();
 
 // === 移动端横向滑动切换图片（带动效） ===
@@ -279,7 +255,7 @@ window.addEventListener("scroll",function(){var sy=window.scrollY+100;sections.f
       setTimeout(function() {
         if (dir < 0) nl(); else pl();
         lbi.style.transition = 'none';
-        lbi.style.transform = 'translateX(' + (dir * -0.3 * window.innerWidth) + 'px)';
+        lbi.style.transform = 'translateX(' + (dir * -1 * window.innerWidth) + 'px)';
         lbi.style.opacity = '0';
         requestAnimationFrame(function() {
           lbi.style.transition = 'transform .3s ease, opacity .3s ease';
