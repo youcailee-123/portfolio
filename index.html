@@ -255,11 +255,10 @@ window.addEventListener("scroll",function(){var sy=window.scrollY+100;sections.f
       setTimeout(function() {
         if (dir < 0) nl(); else pl();
         lbi.style.transition = 'none';
-        lbi.style.transform = 'translateX(' + (dir * -1 * window.innerWidth) + 'px)';
+        lbi.style.transform = '';
         lbi.style.opacity = '0';
         requestAnimationFrame(function() {
-          lbi.style.transition = 'transform .3s ease, opacity .3s ease';
-          lbi.style.transform = 'translateX(0)';
+          lbi.style.transition = 'opacity .3s ease';
           lbi.style.opacity = '1';
           setTimeout(function(){ swipeLocked = false; }, 350);
         });
