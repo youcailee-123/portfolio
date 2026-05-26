@@ -151,7 +151,7 @@ document.addEventListener("keydown",function(e){if(!lb.classList.contains("open"
 lbi.addEventListener("click",function(e){e.stopPropagation();cl()});
 var vfo=document.getElementById("videoFsOverlay"),vfp=document.getElementById("videoFsPlayer"),vfc=document.getElementById("videoFsClose");
 function openFsVideo(vid){vfp.src=vid.src;vfp.currentTime=vid.currentTime;vfp.play();vfo.classList.add("open");document.body.style.overflow="hidden";document.documentElement.style.overflow="hidden"}
-function cvf(){vfo.classList.remove("open");document.body.style.overflow="";vfp.pause();setTimeout(function(){vfp.removeAttribute("src")},300)}
+function cvf(){vfo.classList.remove("open");document.body.style.overflow="";document.documentElement.style.overflow="";vfp.pause();setTimeout(function(){vfp.removeAttribute("src")},300)}
 vfc.addEventListener("click",cvf);vfo.addEventListener("click",function(e){if(e.target===vfo)cvf()});document.addEventListener("keydown",function(e){if(!vfo.classList.contains("open"))return;if(e.key==="Escape")cvf()});
 var nav=document.getElementById("nav"),bt=document.getElementById("backTop");window.addEventListener("scroll",function(){bt.classList.toggle("visible",window.scrollY>600)});bt.addEventListener("click",function(){window.scrollTo({top:0,behavior:"smooth"})});
 var obs=new IntersectionObserver(function(e){e.forEach(function(e){if(e.isIntersecting){e.target.style.opacity="1";e.target.style.transform="translateY(0)"}})},{threshold:.1,rootMargin:"0px 0px -40px 0px"});document.querySelectorAll(".bento-card,.proj-card,.timeline-item,.gallery-item").forEach(function(el){el.style.opacity="0";el.style.transform="translateY(28px)";el.style.transition="opacity .6s ease,transform .6s ease";obs.observe(el)});
